@@ -5,7 +5,7 @@ allowBuilds:
 packages:
   - packages/*
   - tooling/*
-#  - docs
+  - docs
 
 catalog:
   '@adonisjs/tsconfig': ^2
