@@ -26,9 +26,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
       - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
-          version: 11.1.0
           run_install: false
 
       - name: 🅝 Setup node
