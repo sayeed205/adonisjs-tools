@@ -1,0 +1,53 @@
+name: 📦 Publish previews
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+
+jobs:
+  preview:
+    if: contains(github.event.pull_request.labels.*.name, 'preview')
+    runs-on: ubuntu-latest
+    env:
+      TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+    steps:
+      - name: ⬇ Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ⚡ Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.0
+          run_install: false
+
+      - name: 🅝 Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: 📦 Install Node dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔨 Build changed packages
+        run: pnpm build --filter="[origin/main...$GITHUB_SHA]" --filter="!./playgrounds/*"
+
+      - name: 📦 Get changed packages
+        id: changed
+        run: |
+          PACKAGES=$(pnpm turbo ls --filter="[origin/main...$GITHUB_SHA]" --filter="!./playgrounds/*" --output=json | jq -r '[.packages.items[] | select(.name | startswith("@hitarashi/")) | "./\(.path)"] | join(" ")')
+          echo "packages=$PACKAGES" >> "$GITHUB_OUTPUT"
+
+      - name: 📦 Publish previews
+        if: steps.changed.outputs.packages != ''
+        run: pnpm dlx pkg-pr-new publish --compact ${{ steps.changed.outputs.packages }}

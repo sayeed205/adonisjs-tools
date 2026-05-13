@@ -1,0 +1,27 @@
+{
+  "name": "@hitarashi/tsconfig",
+  "version": "0.0.1",
+  "license": "MIT",
+  "files": [
+    "*.json",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    "./adonis.app": "./adonis.app.json",
+    "./adonis.app.json": "./adonis.app.json",
+    "./adonis.package": "./adonis.package.json",
+    "./adonis.package.json": "./adonis.package.json",
+    "./base": "./base.json",
+    "./base.json": "./base.json",
+    "./nextjs": "./nextjs.json",
+    "./nextjs.json": "./nextjs.json",
+    "./react-library": "./react-library.json",
+    "./react-library.json": "./react-library.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@adonisjs/tsconfig": "catalog:"
+  }
+}

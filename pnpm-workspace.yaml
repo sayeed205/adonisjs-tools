@@ -1,0 +1,11 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+
+packages:
+  - packages/*
+  - tooling/*
+  - docs
+
+catalog:
+  '@adonisjs/tsconfig': ^2

@@ -1,0 +1,44 @@
+{
+  "name": "adonisjs",
+  "private": true,
+  "workspaces": [
+    "docs",
+    "packages/*",
+    "tooling/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "typecheck": "turbo typecheck",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
+    "play:actions": "turbo dev --filter=playground-actions...",
+    "automd": "automd"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
+    "@manypkg/cli": "^0.25.1",
+    "@poppinss/ts-exec": "^1.4.4",
+    "automd": "^0.4.3",
+    "mdbox": "^0.1.1",
+    "node-gyp": "^12.3.0",
+    "oxfmt": "^0.49.0",
+    "oxlint": "^1.64.0",
+    "turbo": "^2.9.12",
+    "typescript": "^6.0.3",
+    "yaml": "^2.9.0"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@11.1.0",
+  "manypkg": {
+    "defaultBranch": "main"
+  }
+}
